@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Molecule</title>
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;background:#0b0f14;color:#e6e8eb}
+    header{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 1rem}
+    h1{margin:0 0 .5rem;font-size:2.1rem}
+    p{margin:.25rem 0 0;color:#9aa4b2;max-width:720px}
+    main{max-width:900px;margin:0 auto;padding:1.5rem}
+    .card{background:#121824;border:1px solid #1e2633;border-radius:14px;padding:1.25rem}
+    .btn{display:inline-block;margin-top:1rem;padding:.75rem 1rem;border-radius:10px;background:#7dd3fc;color:#0b0f14;font-weight:800;border:none;cursor:pointer;text-decoration:none}
+    .muted{color:#9aa4b2;font-size:.9rem}
+    footer{max-width:900px;margin:0 auto;padding:2rem 1.5rem 3rem;color:#6b7280;font-size:.85rem}
+    a{color:#7dd3fc;text-decoration:none;font-weight:700}
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="title">Molecule Name</h1>
+    <p id="subtitle">One-line description goes here.</p>
+  </header>
+
+  <main>
+    <div class="card">
+      <div class="muted">Replace this card with your app UI.</div>
+      <button class="btn" id="action">Do thing</button>
+      <div id="output" class="muted" style="margin-top:1rem;"></div>
+    </div>
+  </main>
+
+  <footer>
+    Built as a molecule in <a href="https://elevaistrategies.github.io/labs/" target="_blank" rel="noopener">ElevAI Labs</a>
+  </footer>
+
+  <script>
+    document.getElementById("action").addEventListener("click", () => {
+      document.getElementById("output").textContent = "✅ It works. Now make it useful.";
+    });
+  </script>
+</body>
+</html>
