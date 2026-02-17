@@ -2,43 +2,135 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Molecule</title>
-  <style>
-    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;background:#0b0f14;color:#e6e8eb}
-    header{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 1rem}
-    h1{margin:0 0 .5rem;font-size:2.1rem}
-    p{margin:.25rem 0 0;color:#9aa4b2;max-width:720px}
-    main{max-width:900px;margin:0 auto;padding:1.5rem}
-    .card{background:#121824;border:1px solid #1e2633;border-radius:14px;padding:1.25rem}
-    .btn{display:inline-block;margin-top:1rem;padding:.75rem 1rem;border-radius:10px;background:#7dd3fc;color:#0b0f14;font-weight:800;border:none;cursor:pointer;text-decoration:none}
-    .muted{color:#9aa4b2;font-size:.9rem}
-    footer{max-width:900px;margin:0 auto;padding:2rem 1.5rem 3rem;color:#6b7280;font-size:.85rem}
-    a{color:#7dd3fc;text-decoration:none;font-weight:700}
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Vertical Jump Analyzer</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <h1 id="title">Molecule Name</h1>
-    <p id="subtitle">One-line description goes here.</p>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">🧪</div>
+      <div>
+        <div class="title">Vertical Jump Analyzer</div>
+        <div class="subtitle">Flight-time physics • no APIs • pure browser vibes</div>
+      </div>
+    </div>
   </header>
 
-  <main>
-    <div class="card">
-      <div class="muted">Replace this card with your app UI.</div>
-      <button class="btn" id="action">Do thing</button>
-      <div id="output" class="muted" style="margin-top:1rem;"></div>
-    </div>
+  <main class="wrap">
+    <section class="card">
+      <h2>1) Load your video</h2>
+      <p class="muted">
+        Best results: side view, full body, good lighting, and slow-mo if possible.
+      </p>
+
+      <div class="row">
+        <label class="file">
+          <input id="videoInput" type="file" accept="video/*" />
+          <span>📼 Choose Video</span>
+        </label>
+
+        <button id="clearBtn" class="ghost" type="button" disabled>Clear</button>
+      </div>
+
+      <div class="videoArea">
+        <video id="video" controls playsinline></video>
+        <div class="hint" id="videoHint">Upload a video to begin.</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2) Mark takeoff & landing</h2>
+
+      <div class="grid2">
+        <div class="panel">
+          <h3>Scrub controls</h3>
+
+          <div class="controls">
+            <button id="backBig" type="button" disabled>⏪ -1.0s</button>
+            <button id="backSmall" type="button" disabled>◀ -0.033s</button>
+            <button id="forwardSmall" type="button" disabled>+0.033s ▶</button>
+            <button id="forwardBig" type="button" disabled>+1.0s ⏩</button>
+          </div>
+
+          <div class="row">
+            <label class="inline">
+              Step size:
+              <select id="stepSelect" disabled>
+                <option value="0.0333333">~1/30 sec</option>
+                <option value="0.0166667">~1/60 sec</option>
+                <option value="0.0083333">~1/120 sec</option>
+                <option value="0.0041667">~1/240 sec</option>
+              </select>
+            </label>
+
+            <div class="timebox">
+              <div class="muted tiny">Current time</div>
+              <div id="currentTime" class="mono">0.000s</div>
+            </div>
+          </div>
+
+          <p class="muted tiny">
+            Tip: Use the tiny step buttons to land precisely on “feet leave” and “first touch.”
+          </p>
+        </div>
+
+        <div class="panel">
+          <h3>Markers</h3>
+
+          <div class="markers">
+            <button id="markTakeoff" type="button" class="primary" disabled>🚀 Mark Takeoff</button>
+            <button id="markLanding" type="button" class="primary" disabled>🛬 Mark Landing</button>
+          </div>
+
+          <div class="markerReadout">
+            <div class="kv">
+              <div class="k">Takeoff</div>
+              <div class="v mono" id="takeoffVal">—</div>
+            </div>
+            <div class="kv">
+              <div class="k">Landing</div>
+              <div class="v mono" id="landingVal">—</div>
+            </div>
+            <div class="kv">
+              <div class="k">Flight Time</div>
+              <div class="v mono" id="flightVal">—</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="inline">
+              Gravity:
+              <select id="gravitySelect" disabled>
+                <option value="9.81" selected>Earth (9.81 m/s²)</option>
+                <option value="1.62">Moon (1.62 m/s²)</option>
+                <option value="3.71">Mars (3.71 m/s²)</option>
+              </select>
+            </label>
+
+            <button id="calcBtn" type="button" class="accent" disabled>📏 Calculate</button>
+          </div>
+
+          <div class="result" id="result">
+            <div class="resultTop">
+              <div class="resultLabel">Estimated Jump Height</div>
+              <div class="resultValue mono" id="heightVal">—</div>
+            </div>
+            <div class="muted tiny" id="resultNote">
+              Formula: height ≈ (g × t²) / 8
+            </div>
+          </div>
+
+          <button id="shareBtn" type="button" class="ghost" disabled>🧾 Copy Result Summary</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Built for ElevAI Labs molecules • Pure browser physics • No keys, no clouds ☁️🚫
+    </footer>
   </main>
 
-  <footer>
-    Built as a molecule in <a href="https://elevaistrategies.github.io/labs/" target="_blank" rel="noopener">ElevAI Labs</a>
-  </footer>
-
-  <script>
-    document.getElementById("action").addEventListener("click", () => {
-      document.getElementById("output").textContent = "✅ It works. Now make it useful.";
-    });
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
