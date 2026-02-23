@@ -42,6 +42,7 @@
   function init() {
     cacheDOMElements();
     initTheme();
+    bindScrollHide();
     bindVideoEvents();
     bindThemeEvents();
     bindScrubEvents();
@@ -113,12 +114,38 @@
     DOM.vcMarkLanding = document.getElementById('vcMarkLanding');
     DOM.vcPrevFrame = document.getElementById('vcPrevFrame');
     DOM.vcNextFrame = document.getElementById('vcNextFrame');
+    DOM.topbar = document.querySelector('.topbar');
   }
   // ----- Theme -----
   function initTheme() {
     const saved = localStorage.getItem('vja_theme');
     if (saved === 'light') document.body.classList.add('theme-light');
     updateThemeButtonLabel();
+  }
+
+  function bindScrollHide() {
+    if (!DOM.topbar) return;
+    let lastScrollY = window.scrollY;
+    const threshold = 80;
+    let ticking = false;
+    function updateTopbar() {
+      const y = window.scrollY;
+      if (y > threshold && y > lastScrollY) {
+        DOM.topbar.classList.add('topbar--hidden');
+        document.body.classList.add('topbar-hidden');
+      } else if (y < lastScrollY || y < 40) {
+        DOM.topbar.classList.remove('topbar--hidden');
+        document.body.classList.remove('topbar-hidden');
+      }
+      lastScrollY = y;
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateTopbar);
+        ticking = true;
+      }
+    }, { passive: true });
   }
 
   function bindThemeEvents() {
