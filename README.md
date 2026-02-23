@@ -1,26 +1,18 @@
-# Molecule: <NAME>
+# Vertical Jump Analyzer (Flight Time Method)
 
-One-line description.
+Upload a slow-motion jump video, mark:
+- Takeoff (feet leave the ground)
+- Landing (first ground contact)
 
-## Live
-- GitHub Pages: <LINK>
+Then the app estimates jump height using:
+height ≈ (g * t^2) / 8
 
-## What it does
-- Bullet
-- Bullet
+Where:
+- g = 9.81 m/s^2
+- t = landingTime - takeoffTime
 
-## Notes
-- Built in ElevAI Labs
-
-
-Every new app:
-
-Click Use this template
-
-Name it: molecule-whatever
-
-Add your app logic
-
-Enable Pages (main + root)
-
-Paste the Pages URL into labs/molecules.json
+## Run locally
+Option A: Live Server
+Option B: Python server:
+python -m http.server 5500
+Then open http://localhost:5500
