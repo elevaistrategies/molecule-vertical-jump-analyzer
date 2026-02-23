@@ -42,16 +42,29 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 16px;
+  padding-top: 78px; /* space for fixed topbar */
+  transition: padding-top 0.25s ease;
+}
+
+body.topbar-hidden .app {
+  padding-top: 16px;
 }
 
 /* Top bar */
 .topbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 20;
   backdrop-filter: blur(10px);
   background: color-mix(in srgb, var(--bg-dark) 85%, transparent);
   border-bottom: 1px solid var(--border-color);
+  transition: transform 0.25s ease;
+}
+
+.topbar--hidden {
+  transform: translateY(-100%);
 }
 
 .brand {
@@ -221,20 +234,20 @@ body {
   }
 
   .dpadOverlay .dpad-btn {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     font-size: .75rem;
     border-radius: 6px;
   }
 
   .dpadOverlay .dpad-center {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
   }
 
   .dpadOverlay .zoom-overlay-row .zoom-btn {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     font-size: .85rem;
   }
 
