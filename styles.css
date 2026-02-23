@@ -213,25 +213,29 @@ body {
   .dpadOverlay {
     right: max(8px, env(safe-area-inset-right));
     top: max(8px, env(safe-area-inset-top));
-    gap: 4px;
+    gap: 2px;
   }
 
-  .dpad-btn {
-    width: 32px;
-    height: 32px;
-    font-size: .9rem;
-    border-radius: 9px;
+  .dpadOverlay .dpad {
+    gap: 1px;
   }
 
-  .dpad-center {
-    width: 30px;
-    height: 30px;
+  .dpadOverlay .dpad-btn {
+    width: 26px;
+    height: 26px;
+    font-size: .75rem;
+    border-radius: 6px;
   }
 
-  .zoom-overlay-row .zoom-btn {
-    width: 30px;
-    height: 30px;
-    font-size: 1.05rem;
+  .dpadOverlay .dpad-center {
+    width: 24px;
+    height: 24px;
+  }
+
+  .dpadOverlay .zoom-overlay-row .zoom-btn {
+    width: 24px;
+    height: 24px;
+    font-size: .85rem;
   }
 
   /* Mobile: keep the quick controls under the video visible and not overflowing */
@@ -784,6 +788,7 @@ body.theme-light .result-area .formula-text {
   align-items: flex-start;
   gap: 10px;
 }
+
 .checkbox {
   display: inline-flex;
   align-items: center;
@@ -794,14 +799,16 @@ body.theme-light .result-area .formula-text {
   font-size: .9rem;
   line-height: 1.2;
 }
-.checkbox input[type="checkbox"]{
+
+.checkbox input[type="checkbox"] {
   width: 18px;
   height: 18px;
   accent-color: var(--accent);
   cursor: pointer;
   flex: 0 0 auto;
 }
-.checkbox-help{
+
+.checkbox-help {
   font-size: .8rem;
   color: var(--text-muted);
   margin-left: 28px;
