@@ -42,7 +42,8 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 16px;
-  padding-top: 78px; /* space for fixed topbar */
+  padding-top: 78px;
+  /* space for fixed topbar */
   transition: padding-top 0.25s ease;
 }
 
@@ -251,51 +252,24 @@ body.topbar-hidden .app {
     font-size: .85rem;
   }
 
-  /* Mobile: play + time slider on first row, then other controls */
+  /* Mobile: row 1 = play + slider + time; row 2 = speed first (under play), then other controls */
   .video-controls {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto auto;
+    grid-template-rows: auto auto;
     gap: 8px;
     padding: 10px 10px;
   }
 
-  .video-controls .vc-play {
-    order: 0;
-  }
-
-  .video-controls .vc-progress-wrap {
-    flex: 1;
-    min-width: 80px;
-    order: 1;
-  }
-
-  .video-controls .vc-time {
-    min-width: 0;
-    order: 2;
-  }
-
-  .video-controls .vc-speed {
-    order: 3;
-  }
-
-  .video-controls #vcPrevFrame {
-    order: 4;
-  }
-
-  .video-controls #vcNextFrame {
-    order: 5;
-  }
-
-  .video-controls #vcMarkTakeoff {
-    order: 6;
-  }
-
-  .video-controls #vcMarkLanding {
-    order: 7;
-  }
-
-  .video-controls .vc-fullscreen {
-    order: 8;
-  }
+  .video-controls .vc-play { grid-area: 1 / 1; }
+  .video-controls .vc-progress-wrap { grid-area: 1 / 2; min-width: 0; }
+  .video-controls .vc-time { grid-area: 1 / 3; min-width: 0; }
+  .video-controls .vc-speed { grid-area: 2 / 1; }
+  .video-controls #vcPrevFrame { grid-area: 2 / 2; }
+  .video-controls #vcNextFrame { grid-area: 2 / 3; }
+  .video-controls #vcMarkTakeoff { grid-area: 2 / 4; }
+  .video-controls #vcMarkLanding { grid-area: 2 / 5; }
+  .video-controls .vc-fullscreen { grid-area: 2 / 6; }
 
   .vc-btn {
     min-width: 30px;
