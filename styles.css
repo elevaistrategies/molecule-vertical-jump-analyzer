@@ -263,11 +263,6 @@ body {
   .vc-speed {
     order: 22;
   }
-
-  /* Volume isn't important on mobile here */
-  .vc-volume-wrap {
-    display: none;
-  }
 }
 
 /* Hint overlay */
@@ -399,40 +394,6 @@ body {
 .video-controls .vc-speed option {
   background: #1a2332;
   color: #e4eaf5;
-}
-
-.vc-volume-wrap {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.vc-volume {
-  width: 70px;
-  height: 5px;
-  -webkit-appearance: none;
-  appearance: none;
-  background: rgba(255, 255, 255, .2);
-  border-radius: 3px;
-  accent-color: var(--accent);
-}
-
-.vc-volume::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #e4eaf5;
-  cursor: pointer;
-}
-
-.vc-volume::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #e4eaf5;
-  cursor: pointer;
-  border: none;
 }
 
 .vc-fullscreen {
