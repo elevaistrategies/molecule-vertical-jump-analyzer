@@ -251,41 +251,52 @@ body.topbar-hidden .app {
     font-size: .85rem;
   }
 
-  /* Mobile: 2 rows, no overlap */
+  /* Mobile: 2 rows (no overlap)
+     Row 1: Play, Progress, Time
+     Row 2: Speed, Prev, Next, Takeoff, Landing, Fullscreen */
   .video-controls {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto auto auto auto;
-    grid-template-rows: auto auto;
-    gap: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
     padding: 10px 10px;
   }
 
-  .video-controls .vc-play { grid-column: 1; grid-row: 1; }
+  /* Force wrap between row 1 and row 2 */
+  .vc-break {
+    display: block;
+    flex-basis: 100%;
+    height: 0;
+  }
+
+  /* Row 1 sizing */
+  .video-controls .vc-play { flex: 0 0 auto; }
   .video-controls .vc-progress-wrap {
-    grid-column: 2;
-    grid-row: 1;
-    min-width: 0;
+    flex: 1 1 220px;
+    min-width: 0 !important;
   }
   .video-controls .vc-time {
-    grid-column: 3;
-    grid-row: 1;
+    flex: 0 0 auto;
     min-width: 0;
-    font-size: .75rem;
+    font-size: .78rem;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  .video-controls .vc-speed { grid-column: 1; grid-row: 2; min-width: 0; font-size: .8rem; padding: 4px 6px; }
-  .video-controls #vcPrevFrame { grid-column: 2; grid-row: 2; }
-  .video-controls #vcNextFrame { grid-column: 3; grid-row: 2; }
-  .video-controls #vcMarkTakeoff { grid-column: 4; grid-row: 2; }
-  .video-controls #vcMarkLanding { grid-column: 5; grid-row: 2; }
-  .video-controls .vc-fullscreen { grid-column: 6; grid-row: 2; }
+
+  /* Row 2 sizing */
+  .video-controls .vc-speed {
+    flex: 0 0 78px;
+    min-width: 0;
+    font-size: .8rem;
+    padding: 4px 6px;
+  }
 
   .video-controls .vc-btn {
-    min-width: 26px;
-    width: 26px;
-    height: 26px;
-    font-size: .85rem;
+    min-width: 30px;
+    width: 30px;
+    height: 30px;
+    font-size: .9rem;
     padding: 2px;
   }
 }
@@ -331,6 +342,11 @@ body.topbar-hidden .app {
   padding: 10px 12px;
   background: rgba(20, 28, 40, 0.95);
   border-top: 1px solid var(--border-color);
+}
+
+/* Helper element used to split the control bar into 2 rows on mobile */
+.vc-break {
+  display: none;
 }
 
 .vc-btn {
