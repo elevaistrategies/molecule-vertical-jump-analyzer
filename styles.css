@@ -208,6 +208,66 @@ body {
   .brand {
     padding: 10px 12px;
   }
+
+  /* Mobile: keep overlays small + pinned top-right */
+  .dpadOverlay {
+    right: max(8px, env(safe-area-inset-right));
+    top: max(8px, env(safe-area-inset-top));
+    gap: 4px;
+  }
+
+  .dpad-btn {
+    width: 32px;
+    height: 32px;
+    font-size: .9rem;
+    border-radius: 9px;
+  }
+
+  .dpad-center {
+    width: 30px;
+    height: 30px;
+  }
+
+  .zoom-overlay-row .zoom-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 1.05rem;
+  }
+
+  /* Mobile: keep the quick controls under the video visible and not overflowing */
+  .video-controls {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 10px;
+  }
+
+  .vc-btn {
+    min-width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+
+  .vc-progress-wrap {
+    flex-basis: 100%;
+    min-width: 0;
+    order: 20;
+  }
+
+  .vc-time {
+    flex-basis: 100%;
+    min-width: 0;
+    text-align: left;
+    order: 21;
+  }
+
+  .vc-speed {
+    order: 22;
+  }
+
+  /* Volume isn't important on mobile here */
+  .vc-volume-wrap {
+    display: none;
+  }
 }
 
 /* Hint overlay */
