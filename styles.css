@@ -222,74 +222,59 @@ body.topbar-hidden .app {
     padding: 10px 12px;
   }
 
-  /* Mobile: keep overlays small + pinned top-right */
-  .dpadOverlay {
-    right: max(8px, env(safe-area-inset-right));
-    top: max(8px, env(safe-area-inset-top));
-    gap: 2px;
-  }
-
-  .dpadOverlay .dpad {
-    gap: 1px;
-  }
-
-  .dpadOverlay .dpad-btn {
-    width: 28px;
-    height: 28px;
-    font-size: .75rem;
-    border-radius: 6px;
-  }
-
-  .dpadOverlay .dpad-center {
-    width: 26px;
-    height: 26px;
-  }
-
-  .dpadOverlay .zoom-overlay-row .zoom-btn {
-    width: 26px;
-    height: 26px;
-    font-size: .85rem;
-  }
-
   /* Mobile: 2 rows (no overlap)
-     Row 1: Play, Progress, Time
+     Row 1: Play, Progress, Time (time locked to the right of the slider)
      Row 2: Speed, Prev, Next, Takeoff, Landing, Fullscreen */
-  .video-controls {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 10px;
+  .video-controls{
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:8px;
+    padding:10px 10px;
   }
 
-  /* Force wrap between row 1 and row 2 */
-  .vc-break {
-    display: block;
-    flex-basis: 100%;
-    height: 0;
+  /* Back-compat if an older build still has vc-break */
+  .vc-break{ display:none !important; }
+
+  /* Default wrapper rows */
+  .video-controls .vc-row{ width:100%; }
+
+  /* Row 1: keep everything on ONE line */
+  .video-controls .vc-row1{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:nowrap;
+    width:100%;
+  }
+  .video-controls .vc-row1 .vc-play{ flex:0 0 auto; }
+  .video-controls .vc-row1 .vc-progress-wrap{
+    flex:1 1 auto;
+    min-width:0 !important; /* overrides the desktop 480px min-width */
+  }
+  .video-controls .vc-row1 .vc-progress{ min-width:0; }
+  .video-controls .vc-row1 .vc-time{
+    flex:0 0 auto;
+    margin-left:auto;
+    font-size:.78rem;
+    white-space:nowrap;
+    min-width:0;
   }
 
-  /* Row 1 sizing */
-  .video-controls .vc-play { flex: 0 0 auto; }
-  .video-controls .vc-progress-wrap {
-    flex: 1 1 220px;
-    min-width: 0 !important;
-  }
-  .video-controls .vc-time {
-    flex: 0 0 auto;
-    min-width: 0;
-    font-size: .78rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  /* Row 2: wrap nicely */
+  .video-controls .vc-row2{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    width:100%;
   }
 
-  /* Row 2 sizing */
-  .video-controls .vc-speed {
-    flex: 0 0 78px;
-    min-width: 0;
-    font-size: .8rem;
-    padding: 4px 6px;
+  .video-controls .vc-row2 .vc-speed{
+    flex:0 0 78px;
+    min-width:0;
+    font-size:.8rem;
+    padding:4px 6px;
   }
 
   .video-controls .vc-btn {
@@ -348,6 +333,9 @@ body.topbar-hidden .app {
 .vc-break {
   display: none;
 }
+
+/* Row wrappers are layout-neutral on desktop */
+.vc-row{ display: contents; }
 
 .vc-btn {
   background: transparent;
