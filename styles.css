@@ -251,34 +251,56 @@ body.topbar-hidden .app {
     font-size: .85rem;
   }
 
-  /* Mobile: keep the quick controls under the video visible and not overflowing */
+  /* Mobile: play + time slider on first row, then other controls */
   .video-controls {
     flex-wrap: wrap;
     gap: 8px;
     padding: 10px 10px;
   }
 
+  .video-controls .vc-play {
+    order: 0;
+  }
+
+  .video-controls .vc-progress-wrap {
+    flex: 1;
+    min-width: 80px;
+    order: 1;
+  }
+
+  .video-controls .vc-time {
+    min-width: 0;
+    order: 2;
+  }
+
+  .video-controls .vc-speed {
+    order: 3;
+  }
+
+  .video-controls #vcPrevFrame {
+    order: 4;
+  }
+
+  .video-controls #vcNextFrame {
+    order: 5;
+  }
+
+  .video-controls #vcMarkTakeoff {
+    order: 6;
+  }
+
+  .video-controls #vcMarkLanding {
+    order: 7;
+  }
+
+  .video-controls .vc-fullscreen {
+    order: 8;
+  }
+
   .vc-btn {
     min-width: 30px;
     height: 30px;
     font-size: 1rem;
-  }
-
-  .vc-progress-wrap {
-    flex-basis: 100%;
-    min-width: 0;
-    order: 20;
-  }
-
-  .vc-time {
-    flex-basis: 100%;
-    min-width: 0;
-    text-align: left;
-    order: 21;
-  }
-
-  .vc-speed {
-    order: 22;
   }
 }
 
