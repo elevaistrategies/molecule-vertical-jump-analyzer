@@ -107,8 +107,6 @@
     DOM.vcPlay = document.getElementById('vcPlay');
     DOM.vcProgress = document.getElementById('vcProgress');
     DOM.vcTime = document.getElementById('vcTime');
-    DOM.vcVolumeBtn = document.getElementById('vcVolumeBtn');
-    DOM.vcVolume = document.getElementById('vcVolume');
     DOM.vcFullscreen = document.getElementById('vcFullscreen');
     DOM.vcSpeed = document.getElementById('vcSpeed');
     DOM.vcMarkTakeoff = document.getElementById('vcMarkTakeoff');
@@ -164,6 +162,7 @@
     DOM.video.src = url;
     DOM.video.load();
     DOM.video.currentTime = 0;
+    DOM.video.muted = true;
     state.videoLoaded = true;
     resetView();
     DOM.filenameDisplay.textContent = file.name;
@@ -178,10 +177,10 @@
   function clearVideo() {
     try {
       DOM.video.pause();
-    } catch {}
+    } catch { }
     if (DOM.video) DOM.video.srcObject = null;
     if (DOM.video && DOM.video.src) {
-      try { URL.revokeObjectURL(DOM.video.src); } catch {}
+      try { URL.revokeObjectURL(DOM.video.src); } catch { }
     }
     if (DOM.video) DOM.video.removeAttribute('src');
     if (DOM.video) DOM.video.load();
@@ -228,6 +227,7 @@
     DOM.video.src = url;
     DOM.video.load();
     DOM.video.currentTime = 0;
+    DOM.video.muted = true;
     state.videoLoaded = true;
     resetView();
     DOM.filenameDisplay.textContent = filename || 'Recorded video';
@@ -436,32 +436,32 @@
     doZoom(delta);
   }
 
-  
 
-// ----- Calculation Mode -----
-const EARTH_G = 9.81;
 
-function bindCalcModeEvents() {
-  if (!DOM.useMeasuredTime) return;
-  // Default: same takeoff force as Earth (unchecked)
-  DOM.useMeasuredTime.checked = false;
-  updateFormulaText();
-  DOM.useMeasuredTime.addEventListener('change', () => {
+  // ----- Calculation Mode -----
+  const EARTH_G = 9.81;
+
+  function bindCalcModeEvents() {
+    if (!DOM.useMeasuredTime) return;
+    // Default: same takeoff force as Earth (unchecked)
+    DOM.useMeasuredTime.checked = false;
     updateFormulaText();
-    if (state.takeoff != null && state.landing != null) calculate();
-  });
-}
-
-function updateFormulaText() {
-  if (!DOM.formulaText) return;
-  if (DOM.useMeasuredTime && DOM.useMeasuredTime.checked) {
-    DOM.formulaText.textContent = 'h = g × t² / 8 (t measured, g selected)';
-  } else {
-    DOM.formulaText.textContent = 'h = (gₑ² × t²) / (8g)  (same Earth takeoff, g selected)';
+    DOM.useMeasuredTime.addEventListener('change', () => {
+      updateFormulaText();
+      if (state.takeoff != null && state.landing != null) calculate();
+    });
   }
-}
 
-// ----- Gravity -----
+  function updateFormulaText() {
+    if (!DOM.formulaText) return;
+    if (DOM.useMeasuredTime && DOM.useMeasuredTime.checked) {
+      DOM.formulaText.textContent = 'h = g × t² / 8 (t measured, g selected)';
+    } else {
+      DOM.formulaText.textContent = 'h = (gₑ² × t²) / (8g)  (same Earth takeoff, g selected)';
+    }
+  }
+
+  // ----- Gravity -----
   function bindGravityEvents() {
     DOM.gravitySelect.addEventListener('change', onGravityChange);
     DOM.customGravityInput.addEventListener('input', () => { state.gravity = parseFloat(DOM.customGravityInput.value) || 9.81; });
@@ -479,38 +479,38 @@ function updateFormulaText() {
   }
 
   function calculate() {
-  if (state.takeoff == null || state.landing == null) return;
-  const t = state.landing - state.takeoff;
-  if (t <= 0) return;
+    if (state.takeoff == null || state.landing == null) return;
+    const t = state.landing - state.takeoff;
+    if (t <= 0) return;
 
-  const gSelected = state.gravity || EARTH_G;
-  const useMeasuredTime = !!(DOM.useMeasuredTime && DOM.useMeasuredTime.checked);
+    const gSelected = state.gravity || EARTH_G;
+    const useMeasuredTime = !!(DOM.useMeasuredTime && DOM.useMeasuredTime.checked);
 
-  if (useMeasuredTime) {
-    // Treat your measured flight time as if it happened under the selected gravity.
-    state.jumpHeightM = (gSelected * t * t) / 8;
-  } else {
-    // Same takeoff force as Earth:
-    // v0 from Earth flight time: v0 = gE * t / 2
-    // height on planet: h = v0^2 / (2 gSelected) = (gE^2 * t^2) / (8 gSelected)
-    state.jumpHeightM = (EARTH_G * EARTH_G * t * t) / (8 * gSelected);
+    if (useMeasuredTime) {
+      // Treat your measured flight time as if it happened under the selected gravity.
+      state.jumpHeightM = (gSelected * t * t) / 8;
+    } else {
+      // Same takeoff force as Earth:
+      // v0 from Earth flight time: v0 = gE * t / 2
+      // height on planet: h = v0^2 / (2 gSelected) = (gE^2 * t^2) / (8 gSelected)
+      state.jumpHeightM = (EARTH_G * EARTH_G * t * t) / (8 * gSelected);
+    }
+
+    const inches = state.jumpHeightM * 39.37;
+    const cm = state.jumpHeightM * 100;
+    if (DOM.resultInches) DOM.resultInches.textContent = inches.toFixed(2) + ' in';
+    if (DOM.resultCm) DOM.resultCm.textContent = cm.toFixed(2) + ' cm';
   }
 
-  const inches = state.jumpHeightM * 39.37;
-  const cm = state.jumpHeightM * 100;
-  if (DOM.resultInches) DOM.resultInches.textContent = inches.toFixed(2) + ' in';
-  if (DOM.resultCm) DOM.resultCm.textContent = cm.toFixed(2) + ' cm';
-}
-
-function copySummary() {
+  function copySummary() {
     const text = `Vertical Jump Analysis\nTakeoff: ${state.takeoff != null ? state.takeoff.toFixed(3) : '—'}s\nLanding: ${state.landing != null ? state.landing.toFixed(3) : '—'}s\nFlight: ${state.landing != null && state.takeoff != null ? (state.landing - state.takeoff).toFixed(3) : '—'}s\nHeight: ${state.jumpHeightM != null ? (state.jumpHeightM * 39.37).toFixed(2) : '—'} in`;
-    navigator.clipboard.writeText(text).catch(() => {});
+    navigator.clipboard.writeText(text).catch(() => { });
   }
 
   function bindVideoControls() {
     if (!DOM.video || !DOM.vcPlay) return;
     DOM.vcPlay.addEventListener('click', () => {
-      if (DOM.video.paused) DOM.video.play().catch(() => {});
+      if (DOM.video.paused) DOM.video.play().catch(() => { });
       else DOM.video.pause();
     });
     DOM.video.addEventListener('play', () => { DOM.vcPlay.textContent = '⏸'; });
@@ -518,21 +518,6 @@ function copySummary() {
     if (DOM.vcProgress) DOM.vcProgress.addEventListener('input', () => {
       if (!DOM.video.duration || !isFinite(DOM.video.duration)) return;
       DOM.video.currentTime = (parseFloat(DOM.vcProgress.value) / 100) * DOM.video.duration;
-    });
-    if (DOM.vcVolume) DOM.vcVolume.addEventListener('input', () => {
-      DOM.video.volume = parseFloat(DOM.vcVolume.value) / 100;
-      DOM.vcVolumeBtn.textContent = DOM.video.volume === 0 ? '🔇' : DOM.video.volume < 0.5 ? '🔉' : '🔊';
-    });
-    if (DOM.vcVolumeBtn) DOM.vcVolumeBtn.addEventListener('click', () => {
-      if (DOM.video.volume > 0) {
-        DOM.video.volume = 0;
-        if (DOM.vcVolume) DOM.vcVolume.value = 0;
-        DOM.vcVolumeBtn.textContent = '🔇';
-      } else {
-        DOM.video.volume = 1;
-        if (DOM.vcVolume) DOM.vcVolume.value = 100;
-        DOM.vcVolumeBtn.textContent = '🔊';
-      }
     });
     if (DOM.vcFullscreen) DOM.vcFullscreen.addEventListener('click', toggleFullscreen);
     if (DOM.vcSpeed) {
@@ -552,7 +537,7 @@ function copySummary() {
     const container = document.querySelector('.video-container');
     if (!container) return;
     if (!document.fullscreenElement) {
-      container.requestFullscreen().catch(() => {});
+      container.requestFullscreen().catch(() => { });
     } else {
       document.exitFullscreen();
     }
@@ -567,8 +552,6 @@ function copySummary() {
     if (DOM.vcMarkLanding) DOM.vcMarkLanding.disabled = !enabled;
     if (DOM.vcPrevFrame) DOM.vcPrevFrame.disabled = !enabled;
     if (DOM.vcNextFrame) DOM.vcNextFrame.disabled = !enabled;
-    if (DOM.vcVolume) DOM.vcVolume.disabled = !enabled;
-    if (DOM.vcVolumeBtn) DOM.vcVolumeBtn.disabled = !enabled;
     if (DOM.vcFullscreen) DOM.vcFullscreen.disabled = !hasVideo;
   }
 
@@ -603,7 +586,7 @@ function copySummary() {
       recordStream = stream;
       DOM.video.srcObject = stream;
       DOM.video.muted = true;
-      DOM.video.play().catch(() => {});
+      DOM.video.play().catch(() => { });
       state.videoLoaded = true;
       DOM.videoHint.style.display = 'none';
       DOM.statusBadge.textContent = 'Recording...';
