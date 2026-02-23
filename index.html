@@ -64,14 +64,15 @@
 
           <!-- Video controls bar (under video) -->
           <div class="video-controls" id="videoControls">
+            <div class="vc-row vc-row1">
             <button type="button" class="vc-btn vc-play" id="vcPlay" aria-label="Play/Pause" disabled>▶</button>
             <div class="vc-progress-wrap">
               <input type="range" class="vc-progress" id="vcProgress" min="0" max="100" value="0" step="0.01" disabled>
             </div>
             <span class="vc-time" id="vcTime">0.000 / 0:00</span>
-            <!-- Mobile layout helper: forces row wrap after time -->
-            <div class="vc-break" aria-hidden="true"></div>
-            <select class="vc-speed" id="vcSpeed" disabled>
+            </div>
+            <div class="vc-row vc-row2">
+<select class="vc-speed" id="vcSpeed" disabled>
               <option value="0.25">0.25x</option>
               <option value="0.5">0.5x</option>
               <option value="1" selected>1x</option>
@@ -84,6 +85,8 @@
             <button type="button" class="vc-btn" id="vcMarkLanding" aria-label="Mark landing" disabled>🛬</button>
             <button type="button" class="vc-btn vc-fullscreen" id="vcFullscreen" aria-label="Fullscreen"
               disabled>⛶</button>
+          
+            </div>
           </div>
         </div>
       </section>
