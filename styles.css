@@ -284,6 +284,29 @@ body.topbar-hidden .app {
     font-size: .9rem;
     padding: 2px;
   }
+    /* ===== MOBILE D-PAD SIZE RESTORE ===== */
+  .dpadOverlay {
+    top: 10px;
+    right: 10px;
+    gap: 4px;
+  }
+
+  .dpadOverlay .dpad-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+
+  .dpadOverlay .dpad-center {
+    width: 30px;
+    height: 30px;
+  }
+
+  .dpadOverlay .zoom-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
 }
 
 /* Hint overlay */
