@@ -38,7 +38,7 @@
         <div class="video-container">
           <div class="video-viewport" id="videoArea">
             <div class="video-wrapper" id="videoWrapper">
-              <video id="video" playsinline></video>
+              <video id="video" playsinline muted></video>
             </div>
 
             <div class="hint" id="videoHint">Upload a video to begin.</div>
@@ -80,11 +80,6 @@
             <button type="button" class="vc-btn" id="vcNextFrame" aria-label="Next frame" disabled>⏭</button>
             <button type="button" class="vc-btn" id="vcMarkTakeoff" aria-label="Mark takeoff" disabled>🛫</button>
             <button type="button" class="vc-btn" id="vcMarkLanding" aria-label="Mark landing" disabled>🛬</button>
-            <div class="vc-volume-wrap">
-              <button type="button" class="vc-btn vc-volume-btn" id="vcVolumeBtn" aria-label="Volume"
-                disabled>🔊</button>
-              <input type="range" class="vc-volume" id="vcVolume" min="0" max="100" value="100" disabled>
-            </div>
             <button type="button" class="vc-btn vc-fullscreen" id="vcFullscreen" aria-label="Fullscreen"
               disabled>⛶</button>
           </div>
